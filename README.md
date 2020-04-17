@@ -8,8 +8,8 @@
 1.项目使用IntelliJ IDEA开发，请使用IntelliJ IDEA的版本控制检出功能，输入“https://gitee.com/HaiTao87/TmallDemo.git”拉取项目即可。
 2.项目数据库为MySQL 5.7版本，请在码云附件上下载SQL文件并导入到数据库中。
 3.使用IDEA打开项目后，在maven面板刷新项目，下载依赖包。
-4.在IDEA中启动springboot项目即可。
-5.账户名和密码详见附件中的sql文件。
+4.在IDEA中启动springboot项目即可（run方式或debug方式都行）。
+5.账户名和密码详见附件中的sql文件（sql运行之后在admin表里有账户名和密码）。
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0417/162011_16322740_996301.png "屏幕截图.png")
 
 注意事项：后台管理界面的订单图表没有数据为正常现象，该图表显示的为近7天的交易额。
