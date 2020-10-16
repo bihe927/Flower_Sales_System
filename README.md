@@ -9,7 +9,7 @@
 2.项目数据库为MySQL 5.7版本，请在码云附件上下载SQL文件或者在resources下的sql文件夹中下载sql，并导入到数据库中。
 3.使用IDEA打开项目后，在maven面板刷新项目，下载依赖包。
 4.在IDEA中启动springboot项目即可（run方式或debug方式都行）。
-5.账户名和密码详见附件中的sql文件（sql运行之后在admin表里有账户名和密码 位置:resources下的sql文件夹）。
+5.账户名和密码详见附件中的sql文件或者在resources下的sql文件夹中的sql文件（sql运行之后在admin表里有账户名和密码）。
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1016/150457_5c0c7304_996301.png "屏幕截图.png")
 
 注意事项：后台管理界面的订单图表没有数据为正常现象，该图表显示的为近7天的交易额。
