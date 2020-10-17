@@ -1,5 +1,6 @@
 package com.xq.tmall.controller.admin;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,7 +28,7 @@ import java.util.Stack;
  * 后台管理-用户页
  */
 @Controller
-public class UserController extends BaseController{
+public class UserController extends BaseController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -43,10 +44,10 @@ public class UserController extends BaseController{
 
     //转到后台管理-用户页-ajax
     @RequestMapping(value = "admin/user", method = RequestMethod.GET)
-    public String goUserManagePage(HttpSession session, Map<String, Object> map){
+    public String goUserManagePage(HttpSession session, Map<String, Object> map) {
         logger.info("检查管理员权限");
         Object adminId = checkAdmin(session);
-        if(adminId == null){
+        if (adminId == null) {
             return "admin/include/loginMessage";
         }
 
@@ -68,14 +69,14 @@ public class UserController extends BaseController{
 
     //转到后台管理-用户详情页-ajax
     @RequestMapping(value = "admin/user/{uid}", method = RequestMethod.GET)
-    public String getUserById(HttpSession session, Map<String,Object> map, @PathVariable Integer uid/* 用户ID */){
+    public String getUserById(HttpSession session, Map<String, Object> map, @PathVariable Integer uid/* 用户ID */) {
         logger.info("检查管理员权限");
         Object adminId = checkAdmin(session);
-        if(adminId == null){
+        if (adminId == null) {
             return "admin/include/loginMessage";
         }
 
-        logger.info("获取user_id为{}的用户信息",uid);
+        logger.info("获取user_id为{}的用户信息", uid);
         User user = userService.get(uid);
         logger.info("获取用户详情-所在地地址信息");
         Address address = addressService.get(user.getUser_address().getAddress_areaId());
@@ -127,14 +128,14 @@ public class UserController extends BaseController{
         }
         user.setProductOrderItemList(productOrderItemList);
 
-        if (user.getUser_realname() != null) {
+        if (!StringUtils.isEmpty(user.getUser_realname())) {
             logger.info("用户隐私加密");
             user.setUser_realname(user.getUser_realname().substring(0, 1) + "*");
         } else {
             user.setUser_realname("未命名");
         }
 
-        map.put("user",user);
+        map.put("user", user);
 
         logger.info("转到后台管理-用户详情页-ajax方式");
         return "admin/include/userDetails";
@@ -146,7 +147,7 @@ public class UserController extends BaseController{
     public String getUserBySearch(@RequestParam(required = false) String user_name/* 用户名称 */,
                                   @RequestParam(required = false) Byte[] user_gender_array/* 用户性别数组 */,
                                   @RequestParam(required = false) String orderBy/* 排序字段 */,
-                                  @RequestParam(required = false,defaultValue = "true") Boolean isDesc/* 是否倒序 */,
+                                  @RequestParam(required = false, defaultValue = "true") Boolean isDesc/* 是否倒序 */,
                                   @PathVariable Integer index/* 页数 */,
                                   @PathVariable Integer count/* 行数 */) throws UnsupportedEncodingException {
         //移除不必要条件
@@ -169,7 +170,7 @@ public class UserController extends BaseController{
 
         OrderUtil orderUtil = null;
         if (orderBy != null) {
-            logger.info("根据{}排序，是否倒序:{}",orderBy,isDesc);
+            logger.info("根据{}排序，是否倒序:{}", orderBy, isDesc);
             orderUtil = new OrderUtil(orderBy, isDesc);
         }
 

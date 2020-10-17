@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 17/10/2020 17:16:43
+ Date: 17/10/2020 17:59:40
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address`  (
-  `address_areaId` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `address_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `address_regionId` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `address_areaId` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '地区编码',
+  `address_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '省市名称',
+  `address_regionId` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '父级省市id',
   PRIMARY KEY (`address_areaId`) USING BTREE,
   INDEX `address_regionId`(`address_regionId`) USING BTREE,
   CONSTRAINT `address_ibfk_1` FOREIGN KEY (`address_regionId`) REFERENCES `address` (`address_areaId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '地址表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of address
@@ -3787,14 +3787,14 @@ INSERT INTO `address` VALUES ('820301', '圣方济各堂区', '820300');
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin`  (
-  `admin_id` int(10) NOT NULL AUTO_INCREMENT,
-  `admin_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `admin_nickname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `admin_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `admin_profile_picture_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `admin_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `admin_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '账户名',
+  `admin_nickname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
+  `admin_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密码',
+  `admin_profile_picture_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像地址',
   PRIMARY KEY (`admin_id`) USING BTREE,
   UNIQUE INDEX `un_admin_name`(`admin_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '管理员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin
@@ -3810,10 +3810,10 @@ INSERT INTO `admin` VALUES (4, 'a1209577113', '如有巧合丶', '123456', '2bd5
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
   `category_id` int(10) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `category_image_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `category_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别名称',
+  `category_image_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别图片',
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '类别表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
@@ -3841,17 +3841,17 @@ INSERT INTO `category` VALUES (16, '图书音像', '4601eb3f-2a7a-45d2-809d-8d0b
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product`  (
   `product_id` int(10) NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `product_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `product_price` decimal(10, 2) NULL DEFAULT NULL,
-  `product_sale_price` decimal(10, 2) NOT NULL,
-  `product_create_date` datetime(0) NOT NULL,
-  `product_category_id` int(10) NOT NULL,
-  `product_isEnabled` tinyint(1) NOT NULL DEFAULT 0,
+  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品名称',
+  `product_title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品标题',
+  `product_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '原价',
+  `product_sale_price` decimal(10, 2) NOT NULL COMMENT '促销价',
+  `product_create_date` datetime(0) NOT NULL COMMENT '创建日期',
+  `product_category_id` int(10) NOT NULL COMMENT '类别id',
+  `product_isEnabled` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否可用',
   PRIMARY KEY (`product_id`) USING BTREE,
   INDEX `product_ibfk_1`(`product_category_id`) USING BTREE,
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`product_category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product
@@ -3952,13 +3952,13 @@ INSERT INTO `product` VALUES (89, '测试', '测试', 1.00, 1.00, '2018-05-23 14
 DROP TABLE IF EXISTS `productimage`;
 CREATE TABLE `productimage`  (
   `productimage_id` int(10) NOT NULL AUTO_INCREMENT,
-  `productimage_type` tinyint(1) UNSIGNED NOT NULL,
-  `productimage_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `productimage_product_id` int(10) NOT NULL,
+  `productimage_type` tinyint(1) UNSIGNED NOT NULL COMMENT '类型(0:概述图片 1:详情图片)',
+  `productimage_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片地址',
+  `productimage_product_id` int(10) NOT NULL COMMENT '产品id',
   PRIMARY KEY (`productimage_id`) USING BTREE,
   INDEX `productimage_product_id`(`productimage_product_id`) USING BTREE,
   CONSTRAINT `productimage_ibfk_1` FOREIGN KEY (`productimage_product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1037 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1037 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of productimage
@@ -4918,24 +4918,24 @@ INSERT INTO `productimage` VALUES (1036, 0, '4e7e04df-2040-4c92-be96-a8d94974426
 DROP TABLE IF EXISTS `productorder`;
 CREATE TABLE `productorder`  (
   `productorder_id` int(10) NOT NULL AUTO_INCREMENT,
-  `productorder_code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `productorder_address` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `productorder_detail_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `productorder_post` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `productorder_receiver` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `productorder_mobile` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `productorder_pay_date` datetime(0) NOT NULL,
-  `productorder_delivery_date` datetime(0) NULL DEFAULT NULL,
-  `productorder_confirm_date` datetime(0) NULL DEFAULT NULL,
-  `productorder_status` tinyint(1) NOT NULL,
-  `productorder_user_id` int(10) NOT NULL,
+  `productorder_code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+  `productorder_address` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品地址',
+  `productorder_detail_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '产品详细地址',
+  `productorder_post` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮政编码',
+  `productorder_receiver` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收货人',
+  `productorder_mobile` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系方式',
+  `productorder_pay_date` datetime(0) NOT NULL COMMENT '支付日期',
+  `productorder_delivery_date` datetime(0) NULL DEFAULT NULL COMMENT '发货日期',
+  `productorder_confirm_date` datetime(0) NULL DEFAULT NULL COMMENT '确认日期',
+  `productorder_status` tinyint(1) NOT NULL COMMENT '订单状态(0:待付款 1:待发货 2:待确认 3:交易成功 4:交易关闭)',
+  `productorder_user_id` int(10) NOT NULL COMMENT '用户id',
   PRIMARY KEY (`productorder_id`) USING BTREE,
   UNIQUE INDEX `un_productorder_code`(`productorder_code`) USING BTREE,
   INDEX `productorder_address`(`productorder_address`) USING BTREE,
   INDEX `productorder_ibfk_2`(`productorder_user_id`) USING BTREE,
   CONSTRAINT `productorder_ibfk_1` FOREIGN KEY (`productorder_address`) REFERENCES `address` (`address_areaId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `productorder_ibfk_2` FOREIGN KEY (`productorder_user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 222 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 222 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of productorder
@@ -5168,12 +5168,12 @@ INSERT INTO `productorder` VALUES (221, '2018052314112801', '610112', '智慧路
 DROP TABLE IF EXISTS `productorderitem`;
 CREATE TABLE `productorderitem`  (
   `productorderitem_id` int(10) NOT NULL AUTO_INCREMENT,
-  `productorderitem_number` smallint(5) UNSIGNED NOT NULL,
-  `productorderitem_price` decimal(10, 2) NOT NULL,
-  `productorderitem_product_id` int(10) NOT NULL,
-  `productorderitem_order_id` int(10) NULL DEFAULT NULL,
-  `productorderitem_user_id` int(10) NOT NULL,
-  `productorderitem_userMessage` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `productorderitem_number` smallint(5) UNSIGNED NOT NULL COMMENT '数量',
+  `productorderitem_price` decimal(10, 2) NOT NULL COMMENT '单价',
+  `productorderitem_product_id` int(10) NOT NULL COMMENT '关联产品id',
+  `productorderitem_order_id` int(10) NULL DEFAULT NULL COMMENT '关联订单id',
+  `productorderitem_user_id` int(10) NOT NULL COMMENT '关联用户id',
+  `productorderitem_userMessage` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户备注',
   PRIMARY KEY (`productorderitem_id`) USING BTREE,
   INDEX `productorderitem_product_id`(`productorderitem_product_id`) USING BTREE,
   INDEX `productorderitem_order_id`(`productorderitem_order_id`) USING BTREE,
@@ -5181,7 +5181,7 @@ CREATE TABLE `productorderitem`  (
   CONSTRAINT `productorderitem_ibfk_1` FOREIGN KEY (`productorderitem_product_id`) REFERENCES `product` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `productorderitem_ibfk_2` FOREIGN KEY (`productorderitem_order_id`) REFERENCES `productorder` (`productorder_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `productorderitem_ibfk_3` FOREIGN KEY (`productorderitem_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 285 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 285 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品订单详细表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of productorderitem
@@ -5455,12 +5455,12 @@ INSERT INTO `productorderitem` VALUES (284, 1, 2599.00, 42, 221, 1, '');
 DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property`  (
   `property_id` int(10) NOT NULL AUTO_INCREMENT,
-  `property_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `property_category_id` int(10) NOT NULL,
+  `property_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '属性名称',
+  `property_category_id` int(10) NOT NULL COMMENT '关联类别id',
   PRIMARY KEY (`property_id`) USING BTREE,
   INDEX `property_category_id`(`property_category_id`) USING BTREE,
   CONSTRAINT `property_ibfk_1` FOREIGN KEY (`property_category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 245 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 245 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '类别属性表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of property
@@ -5710,15 +5710,15 @@ INSERT INTO `property` VALUES (244, '适用发质', 4);
 DROP TABLE IF EXISTS `propertyvalue`;
 CREATE TABLE `propertyvalue`  (
   `propertyvalue_id` int(10) NOT NULL AUTO_INCREMENT,
-  `propertyvalue_value` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `propertyvalue_property_id` int(10) NOT NULL,
-  `propertyvalue_product_id` int(10) NOT NULL,
+  `propertyvalue_value` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '属性值',
+  `propertyvalue_property_id` int(10) NOT NULL COMMENT '关联属性id',
+  `propertyvalue_product_id` int(10) NOT NULL COMMENT '关联产品id',
   PRIMARY KEY (`propertyvalue_id`) USING BTREE,
   INDEX `propertyvalue_property_id`(`propertyvalue_property_id`) USING BTREE,
   INDEX `propertyvalue_product_id`(`propertyvalue_product_id`) USING BTREE,
   CONSTRAINT `propertyvalue_ibfk_1` FOREIGN KEY (`propertyvalue_property_id`) REFERENCES `property` (`property_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `propertyvalue_ibfk_2` FOREIGN KEY (`propertyvalue_product_id`) REFERENCES `product` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 716 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 716 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '产品属性管理表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of propertyvalue
@@ -6444,11 +6444,11 @@ INSERT INTO `propertyvalue` VALUES (715, '1555', 1, 88);
 DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review`  (
   `review_id` int(10) NOT NULL AUTO_INCREMENT,
-  `review_content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `review_createdate` datetime(0) NOT NULL,
-  `review_user_id` int(10) NOT NULL,
-  `review_product_id` int(10) NOT NULL,
-  `review_orderItem_id` int(10) NOT NULL,
+  `review_content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+  `review_createdate` datetime(0) NOT NULL COMMENT '创建日期',
+  `review_user_id` int(10) NOT NULL COMMENT '关联用户id',
+  `review_product_id` int(10) NOT NULL COMMENT '关联产品id',
+  `review_orderItem_id` int(10) NOT NULL COMMENT '关联订单i详细id',
   PRIMARY KEY (`review_id`) USING BTREE,
   INDEX `review_user_id`(`review_user_id`) USING BTREE,
   INDEX `review_product_id`(`review_product_id`) USING BTREE,
@@ -6456,7 +6456,7 @@ CREATE TABLE `review`  (
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`review_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`review_product_id`) REFERENCES `product` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `review_ibfk_3` FOREIGN KEY (`review_orderItem_id`) REFERENCES `productorderitem` (`productorderitem_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of review
@@ -6543,22 +6543,22 @@ INSERT INTO `review` VALUES (75, '111111111', '2018-05-23 00:00:00', 1, 42, 284)
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `user_id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `user_nickname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `user_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `user_realname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `user_gender` tinyint(1) NOT NULL,
-  `user_birthday` date NOT NULL,
-  `user_address` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `user_homeplace` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `user_profile_picture_src` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户名',
+  `user_nickname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '昵称',
+  `user_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密码',
+  `user_realname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
+  `user_gender` tinyint(1) NOT NULL COMMENT '性别',
+  `user_birthday` date NOT NULL COMMENT '出生日期',
+  `user_address` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '所在地地址',
+  `user_homeplace` char(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '家乡',
+  `user_profile_picture_src` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户头像',
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `un_user_name`(`user_name`) USING BTREE,
   INDEX `user_address`(`user_address`) USING BTREE,
   INDEX `user_homeplace`(`user_homeplace`) USING BTREE,
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_address`) REFERENCES `address` (`address_areaId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`user_homeplace`) REFERENCES `address` (`address_areaId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
