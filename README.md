@@ -14,7 +14,7 @@
 
 注意事项：后台管理界面的订单图表没有数据为正常现象，该图表显示的为近7天的交易额。
 
----后台界面(部分)---
+---后台界面(部分)--- 访问地址：http://localhost:8082/tmall/admin/login（账户名和密码在admin表里）
 ![登录界面](https://gitee.com/uploads/images/2018/0526/222324_71d64249_1616166.png "2018-05-26_221417.png")
 ![首页](https://gitee.com/uploads/images/2018/0526/222349_00d5df29_1616166.png "2018-05-26_221445.png")
 ![产品列表](https://gitee.com/uploads/images/2018/0526/222414_c3a74f51_1616166.png "2018-05-26_221454.png")
