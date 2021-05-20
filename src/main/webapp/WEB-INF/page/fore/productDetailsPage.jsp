@@ -4,14 +4,14 @@
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_login.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_productDetails.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_productDetails.css" rel="stylesheet">
-    <title>${requestScope.product.product_name}-tmall.com天猫</title>
+    <title>${requestScope.product.product_name}-爱花居</title>
 </head>
 <body>
 <nav>
     <%@ include file="include/navigator.jsp" %>
     <div class="header">
         <a href="${pageContext.request.contextPath}"><img
-                src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoB.png"></a>
+                src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/logoB.png"></a>
         <span class="shopNameHeader">贤趣${requestScope.product.product_category.category_name}官方旗舰店</span>
         <input id="tid" type="hidden" value="${requestScope.product.product_category.category_id}"/>
         <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/detailsHeaderA.png"
@@ -19,11 +19,11 @@
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 商品/种类/花语"
                            maxlength="50">
-                    <input type="submit" value="搜天猫" class="searchTmall">
+                    <input type="submit" value="搜索" class="searchTmall">
                 </div>
-                <input type="submit" value="搜本店" class="searchShop">
+<%--                <input type="submit" value="搜本店" class="searchShop">--%>
             </form>
             <ul>
                 <c:forEach items="${requestScope.categoryList}" var="category" varStatus="i">
@@ -40,12 +40,12 @@
     <div class="loginDivHeader">
         <a href="javascript:void(0)" class="closeLoginDiv"></a>
     </div>
-    <div class="loginSwitch" id="loginSwitch"></div>
+<%--    <div class="loginSwitch" id="loginSwitch"></div>--%>
     <div class="loginMessage">
-        <div class="loginMessageMain">
-            <div class="poptip-arrow"><em></em><span></span></div>
-            <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/scan-safe.png"/><span>扫码登录更安全</span>
-        </div>
+<%--        <div class="loginMessageMain">--%>
+<%--            <div class="poptip-arrow"><em></em><span></span></div>--%>
+<%--            <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/scan-safe.png"/><span>扫码登录更安全</span>--%>
+<%--        </div>--%>
     </div>
     <div class="pwdLogin">
         <span class="loginTitle">密码登录</span>
@@ -54,7 +54,7 @@
                 <label for="name" class="loginLabel"><img
                         src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/2018-04-27_235518.png"
                         width="38px" height="39px" title="会员名"/></label>
-                <input type="text" name="name" id="name" class="loginInput" placeholder="会员名/邮箱/手机号">
+                <input type="text" name="name" id="name" class="loginInput" placeholder="会员名">
             </div>
             <div class="loginInputDiv">
                 <label for="password" class="loginLabel"><img
@@ -65,8 +65,8 @@
             <input type="submit" class="loginButton" value="登 录">
         </form>
         <div class="loginLinks">
-            <a href="#">忘记密码</a>
-            <a href="#">忘记会员名</a>
+<%--            <a href="#">忘记密码</a>--%>
+<%--            <a href="#">忘记会员名</a>--%>
             <a href="${pageContext.request.contextPath}/register" target="_blank">免费注册</a>
         </div>
         <div class="error_message">
@@ -121,10 +121,10 @@
         </div>
         <div class="context_info_main">
             <div class="context_info_main_ad">
-                <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/context_ad.png">
-                <span>全天猫实物商品通用</span>
-                <a href="#">去刮券<img
-                        src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallItemContentB.png"></a>
+<%--                <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/context_ad.png">--%>
+<%--                <span>全天猫实物商品通用</span>--%>
+<%--                <a href="#">去刮券<img--%>
+<%--                        src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallItemContentB.png"></a>--%>
             </div>
             <dl class="context_price_panel">
                 <dt>价格</dt>
@@ -140,7 +140,7 @@
                     test="${requestScope.product.product_sale_count != null}">${requestScope.product.product_sale_count}</c:when><c:otherwise>0</c:otherwise></c:choose></span>
             </li>
             <li>累计评价<span>${requestScope.product.product_review_count}</span></li>
-            <li class="tmall_points">送天猫积分<span><fmt:formatNumber type="number"
+            <li class="tmall_points">送积分<span><fmt:formatNumber type="number"
                                                                   value="${requestScope.product.product_sale_price/10}"
                                                                   maxFractionDigits="0"/></span></li>
         </ul>
@@ -156,7 +156,7 @@
                          class="amount_value-down">
                 </span>
                 <span class="amount_unit">件</span>
-                <em>库存1000件</em>
+<%--                <em>库存1000件</em>--%>
             </dd>
         </dl>
         <div class="context_buy">
@@ -220,8 +220,52 @@
                             return false;
                         }
                     });
+                    //点击收藏按钮时
+                    $(".context_addHeart_form").submit(function () {
+                        if ('${sessionScope.userId}' === "") {
+                            $(".loginModel").show();
+                            $(".loginDiv").show();
+                            return false;
+                        }
+                        var number = isNaN($.trim($(".context_buymember").val()));
+                        if (number) {
+                            location.reload();
+                        }else {
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/addHeart/${requestScope.product.product_id}",
+                                type: "GET",
+                                success: function (data) {
+                                    if (data.success) {
+                                        $(".msg").stop(true, true).animate({
+                                            opacity: 1
+                                        }, 550, function () {
+                                            $(".msg").animate({
+                                                opacity: 0
+                                            }, 1500);
+                                        });
+                                    } else {
+                                        if (data.url != null) {
+                                            location.href = "/tmall" + data.url;
+                                        } else {
+                                            alert("商品取消收藏！");
+                                        }
+                                    }
+                                },
+                                beforeSend: function () {
+
+                                },
+                                error: function () {
+                                    alert("加入收藏失败，请稍后再试！");
+                                }
+                            });
+                        }
+                        return false;
+                    });
                 });
             </script>
+            <form method="get" class="context_addHeart_form">
+                <input class="context_buyNow" type="submit" value="添加收藏"/>
+            </form>
             <form method="get" class="context_buy_form">
                 <input class="context_buyNow" type="submit" value="立即购买"/>
             </form>
@@ -233,13 +277,14 @@
             <span>服务承诺</span>
             <a href="#">正品保证</a>
             <a href="#">极速退款</a>
-            <a href="#">七天无理由退换</a>
+<%--            <a href="#">七天无理由退换</a>--%>
         </div>
+
     </div>
     <div class="context_ul">
         <div class="context_ul_head">
             <s></s>
-            <span>看了又看</span>
+            <span>猜你喜欢</span>
         </div>
         <div class="context_ul_goodsList">
             <ul>
@@ -257,8 +302,8 @@
             <input type="hidden" id="guessNumber" value="${requestScope.guessNumber}">
         </div>
         <ul class="context_ul_trigger">
-            <li class="ul_trigger_up"><a href="#"></a></li>
-            <li class="ul_trigger_down"><a href="#"></a></li>
+            <li class="ul_trigger_up"><a href="javascript:void(0);"></a></li>
+            <li class="ul_trigger_down"><a href="javascript:void(0);"></a></li>
         </ul>
     </div>
 </div>

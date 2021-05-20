@@ -19,4 +19,8 @@ public interface ProductService {
     List<Product> getMoreList(Product product, Byte[] bytes, OrderUtil orderUtil, PageUtil pageUtil, String[] product_name_split);
 
     Integer getMoreListTotal(Product product, Byte[] bytes, String[] product_name_split);
+
+    List<Product> getLast();
+
+    void alter(int i);
 }

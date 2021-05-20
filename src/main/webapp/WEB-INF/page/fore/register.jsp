@@ -3,7 +3,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_register.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_register.css" rel="stylesheet">
-    <title>天猫tmall.com - 网上注册</title>
+    <title>爱花居 - 网上注册</title>
     <script>
         $(function () {
             $("span.address_province").text($("#select_order_address_province").find("option:selected").text());
@@ -29,7 +29,7 @@
     <div class="header">
         <div id="mallLogo">
             <a href="${pageContext.request.contextPath}"><img
-                    src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoA.png"><span
+                    src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/logoA.png"><span
                     class="span_tmallRegister">用户注册</span></a>
         </div>
     </div>

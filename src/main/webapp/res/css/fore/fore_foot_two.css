@@ -71,6 +71,10 @@
     display: inline-block;
 }
 
+.context_addHeart_form {
+    display: inline-block;
+}
+
 .context_buyCar_form {
     display: inline-block;
 }

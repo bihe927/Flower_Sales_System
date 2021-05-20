@@ -3,7 +3,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/admin/admin_login.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/res/css/admin/admin_login.css"/>
-    <title>Tmall 管理后台 - 登录</title>
+    <title>鲜花销售管理后台 - 登录</title>
 </head>
 <body>
 <div id="div_background">
@@ -29,7 +29,7 @@
         </ul>
     </div>
     <div id="div_main">
-        <div id="div_head"><p>tmall <span>管理后台</span></p></div>
+        <div id="div_head"><p><span>鲜花销售管理后台</span></p></div>
         <div id="div_content">
             <img id="img_profile_picture"
                  src="${pageContext.request.contextPath}/res/images/admin/loginPage/default_profile_picture-128x128.png"

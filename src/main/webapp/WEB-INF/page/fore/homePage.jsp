@@ -4,31 +4,31 @@
     <script src="${pageContext.request.contextPath}/res/js/jquery-color-2.1.2.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_home.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_home.css" rel="stylesheet"/>
-    <title>天猫tmall.com--理想生活上天猫</title>
+    <title>爱花居</title>
 </head>
 <body>
 <nav>
     <%@ include file="include/navigator.jsp" %>
     <div class="header">
-        <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/HomeLogoA.png">
+        <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/logo_1.png">
         <div class="mallSearch">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="mallSearch-input">
-                    <input class="header_search_input" type="text" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                    <input class="header_search_input" type="text" name="product_name" placeholder="搜索 鲜花 商品/分类/花语"
                            maxlength="50">
                     <input class="header_search_button" type="submit" value="搜索">
                 </div>
             </form>
-            <ul>
-                <c:forEach items="${requestScope.categoryList}" var="category" varStatus="i">
-                    <c:if test="${i.index<9}">
-                        <li><a href="${pageContext.request.contextPath}/product?category_id=${category.category_id}"
-                                <c:if
-                                test="${i.index % 2 != 0}"> style="color: #FF0036"</c:if>>${fn:substring(category.category_name,0,fn:indexOf(category.category_name,' /'))}</a>
-                        </li>
-                    </c:if>
-                </c:forEach>
-            </ul>
+<%--            <ul>--%>
+<%--                <c:forEach items="${requestScope.categoryList}" var="category" varStatus="i">--%>
+<%--                    <c:if test="${i.index<9}">--%>
+<%--                        <li><a href="${pageContext.request.contextPath}/product?category_id=${category.category_id}"--%>
+<%--                                <c:if--%>
+<%--                                test="${i.index % 2 != 0}"> style="color: #FF0036"</c:if>>${fn:substring(category.category_name,0,fn:indexOf(category.category_name,' /'))}</a>--%>
+<%--                        </li>--%>
+<%--                    </c:if>--%>
+<%--                </c:forEach>--%>
+<%--            </ul>--%>
         </div>
     </div>
     <div class="home_nav">
@@ -36,20 +36,21 @@
             <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/header_nav_title.png">
             <span>商品分类</span>
         </div>
-        <a href="https://chaoshi.tmall.com/" target="_blank"><img
-                src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/TB1ztBlaMMPMeJjy1XbXXcwxVXa-200-60.png"></a>
-        <a href="https://www.tmall.hk/" target="_blank"><img
-                src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/TB1t5ObaBxRMKJjy0FdXXaifFXa-200-60.png"></a>
-        <a href="http://vip.tmall.com/" target="_blank">天猫会员</a>
-        <a href="https://3c.tmall.com/" target="_blank">电器城</a>
-        <a href="https://miao.tmall.com/" target="_blank">喵鲜生</a>
-        <a href="http://yao.tmall.com/" target="_blank">医药馆</a>
-        <a href="http://wt.tmall.com/" target="_blank">营业厅</a>
-        <a href="https://meilihui.tmall.com/" target="_blank">魅力惠</a>
-        <a href="https://www.alitrip.com/" target="_blank">飞猪旅行</a>
-        <a href="https://suning.tmall.com/" target="_blank">苏宁易购</a>
+<%--        <a href="https://chaoshi.tmall.com/" target="_blank"><img--%>
+<%--                src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/TB1ztBlaMMPMeJjy1XbXXcwxVXa-200-60.png"></a>--%>
+<%--        <a href="https://www.tmall.hk/" target="_blank"><img--%>
+<%--                src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/TB1t5ObaBxRMKJjy0FdXXaifFXa-200-60.png"></a>--%>
+<%--        <a href="http://vip.tmall.com/" target="_blank">天猫会员</a>--%>
+<%--        <a href="https://3c.tmall.com/" target="_blank">电器城</a>--%>
+<%--        <a href="https://miao.tmall.com/" target="_blank">喵鲜生</a>--%>
+<%--        <a href="http://yao.tmall.com/" target="_blank">医药馆</a>--%>
+<%--        <a href="http://wt.tmall.com/" target="_blank">营业厅</a>--%>
+<%--        <a href="https://meilihui.tmall.com/" target="_blank">魅力惠</a>--%>
+<%--        <a href="https://www.alitrip.com/" target="_blank">飞猪旅行</a>--%>
+<%--        <a href="https://suning.tmall.com/" target="_blank">苏宁易购</a>--%>
     </div>
 </nav>
+<%--轮播图--%>
 <div class="banner">
     <c:forEach var="product" items="${requestScope.specialProductList}" varStatus="i">
         <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/banner/${product.product_id}.jpg"
@@ -58,6 +59,7 @@
     </c:forEach>
 </div>
 <div class="banner_main">
+<%--    侧导航--%>
     <ul class="banner_nav">
         <c:forEach items="${requestScope.categoryList}" var="category">
             <li data-toggle="${category.category_id}" data-status="">

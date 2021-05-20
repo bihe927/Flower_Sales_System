@@ -121,7 +121,7 @@ public class ForeReviewController extends BaseController {
         logger.info("整合评论信息");
         Review review = new Review()
                 .setReview_product(orderItem.getProductOrderItem_product())
-                .setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"))
+                .setReview_content(review_content)
                 .setReview_createDate(new Date())
                 .setReview_user(user)
                 .setReview_orderItem(orderItem);

@@ -32,18 +32,18 @@
 <body>
 <nav id="baseNavigator">
     <a href="${pageContext.request.contextPath}" target="_self">
-        <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoA.png"/>
+        <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/logo.png"/>
     </a>
 </nav>
 <div class="content">
     <div class="contentMain"></div>
     <div class="loginDiv">
-        <div class="loginSwitch" id="loginSwitch"></div>
+<%--        <div class="loginSwitch" id="loginSwitch"></div>--%>
         <div class="loginMessage">
-            <div class="loginMessageMain">
-                <div class="poptip-arrow"><em></em><span></span></div>
-                <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/scan-safe.png"/><span>扫码登录更安全</span>
-            </div>
+<%--            <div class="loginMessageMain">--%>
+<%--                <div class="poptip-arrow"><em></em><span></span></div>--%>
+<%--                <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/scan-safe.png"/><span>扫码登录更安全</span>--%>
+<%--            </div>--%>
         </div>
         <div class="pwdLogin">
             <span class="loginTitle">密码登录</span>
@@ -52,7 +52,7 @@
                     <label for="name" class="loginLabel"><img
                             src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/2018-04-27_235518.png"
                             width="38px" height="39px" title="会员名"/></label>
-                    <input type="text" name="name" id="name" class="loginInput" placeholder="会员名/邮箱/手机号">
+                    <input type="text" name="name" id="name" class="loginInput" placeholder="会员名">
                 </div>
                 <div class="loginInputDiv">
                     <label for="password" class="loginLabel"><img
@@ -63,8 +63,8 @@
                 <input type="submit" class="loginButton" value="登 录">
             </form>
             <div class="loginLinks">
-                <a href="#">忘记密码</a>
-                <a href="#">忘记会员名</a>
+<%--                <a href="#">忘记密码</a>--%>
+<%--                <a href="#">忘记会员名</a>--%>
                 <a href="${pageContext.request.contextPath}/register">免费注册</a>
             </div>
             <div class="error_message">

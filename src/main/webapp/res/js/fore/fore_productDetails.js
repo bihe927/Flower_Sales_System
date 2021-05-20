@@ -66,7 +66,7 @@ $(function () {
         var ulTop = parseInt(ul.css("top"));
         var fTop = ulTop - 480;
         if (ul.height() < 2880) {
-            getGuessLoveProducts();
+            // getGuessLoveProducts();
         }
         if (fTop < -2400) {
             ul.animate({
@@ -170,12 +170,13 @@ function SelectorMousemove(e) {
 function getGuessLoveProducts() {
     $.ajax({
         type: "GET",
-        url: "/tmall/guess/" + $("#tid").val(),
-        data: {"guessNumber": $("#guessNumber").val()},
-        dataType: "json",
+        // url: "/tmall/guess/" + $("#tid").val(),
+        url: "/tmall/recommended",
+        // data: {"guessNumber": $("#guessNumber").val()},
+        // dataType: "json",
         success: function (data) {
             if (data.success) {
-                $("#guessNumber").val(data.guessNumber);
+                // $("#guessNumber").val(data.guessNumber);
                 for (var i = 0; i < data.loveProductList.length; i++) {
                     var src = data.loveProductList[i].singleProductImageList[0].productImage_src;
                     var product_id = data.loveProductList[i].product_id;

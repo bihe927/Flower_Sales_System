@@ -9,10 +9,12 @@
 
 .content > .contentMain {
     position: relative;
-    width: 1190px;
+    /*width: 1190px;*/
+    width: 100%;
     height: 600px;
+    /*height: 859px;*/
     margin: auto;
-    background-image: url(../../images/fore/WebsiteImage/loginbz3.jpg);
+    background-image: url(../../images/fore/WebsiteImage/ahj_log_bg.jpg);
 }
 
 .loginDiv {

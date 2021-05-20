@@ -91,7 +91,7 @@ public class AdminHomeController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "admin/home/charts", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public String getChartDataByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate) throws ParseException {
-        if (beginDate != null && endDate != null) {
+        if (beginDate != null && !"".equals(beginDate) && endDate != null && !"".equals(endDate)) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             return getChartData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
         } else {
@@ -106,7 +106,7 @@ public class AdminHomeController extends BaseController {
         SimpleDateFormat timeSpecial = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
         if (beginDate == null || endDate == null) {
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -7);
+            cal.add(Calendar.DATE, -6);
             beginDate = time.parse(time.format(cal.getTime()));
             cal = Calendar.getInstance();
             endDate = cal.getTime();

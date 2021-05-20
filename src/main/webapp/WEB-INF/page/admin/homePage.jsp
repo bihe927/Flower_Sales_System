@@ -4,7 +4,7 @@
     <script src="${pageContext.request.contextPath}/res/js/admin/admin_home.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/res/css/admin/admin_home.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/res/css/admin/admin_main.css"/>
-    <title>Tmall 管理后台 - 首页</title>
+    <title>爱花居 - 首页</title>
 </head>
 <body>
 <div id="div_home_main">

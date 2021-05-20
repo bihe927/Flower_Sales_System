@@ -4,7 +4,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_userDatiles.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_userDatiles.css" rel="stylesheet">
-    <title>天猫tmall.com - 个人中心</title>
+    <title>爱花居 - 个人中心</title>
     <style rel="stylesheet">
         #baseNavigator {
             padding: 22px 0;
@@ -36,7 +36,7 @@
     <div class="header">
         <div id="mallLogo">
             <a href="${pageContext.request.contextPath}"><img
-                    src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoA.png"><span
+                    src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/logoA.png"><span
                     class="span_tmallRegister">个人中心</span></a>
         </div>
     </div>

@@ -77,11 +77,12 @@
                 // 使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option);
                 //异步加载数据
+                console.log("加载后台数据")
                 getChartData(null, null, JSON.parse('${requestScope.jsonObject}'));
             });
             //设置日期控件约束
             var date = new Date();
-            date.setDate(date.getDate() - 1);
+            // date.setDate(date.getDate() - 1);
             var formatDate = FormatDate(date);
             $("#input_endDate").attr("max", formatDate).attr("min", "2018-01-07").val(formatDate);
             date.setDate(date.getDate() - 6);
@@ -124,7 +125,8 @@
 
         //获取图表数据
         function getChartData(beginDate, endDate, jsonObject) {
-            if (jsonObject == null) {
+            console.log(jsonObject)
+            // if (jsonObject == null) {
                 $.ajax({
                     url: "/tmall/admin/home/charts",
                     type: "get",
@@ -161,30 +163,30 @@
                         $("span.select").removeClass("select");
                     }
                 });
-            } else {
-                //异步加载数据
-                myChart.setOption({
-                    xAxis: {
-                        data: jsonObject.dateStr
-                    },
-                    series: [{
-                        name: "总交易额",
-                        data: jsonObject.orderTotalArray
-                    }, {
-                        name: "交易完成",
-                        data: jsonObject.orderSuccessArray
-                    }, {
-                        name: "等待买家确认",
-                        data: jsonObject.orderUnconfirmedArray
-                    }, {
-                        name: "等待卖家发货",
-                        data: jsonObject.orderNotShippedArray
-                    }, {
-                        name: "等待买家付款",
-                        data: jsonObject.orderUnpaidArray
-                    }]
-                });
-            }
+            // } else {
+            //     //异步加载数据
+            //     myChart.setOption({
+            //         xAxis: {
+            //             data: jsonObject.dateStr
+            //         },
+            //         series: [{
+            //             name: "总交易额",
+            //             data: jsonObject.orderTotalArray
+            //         }, {
+            //             name: "交易完成",
+            //             data: jsonObject.orderSuccessArray
+            //         }, {
+            //             name: "等待买家确认",
+            //             data: jsonObject.orderUnconfirmedArray
+            //         }, {
+            //             name: "等待卖家发货",
+            //             data: jsonObject.orderNotShippedArray
+            //         }, {
+            //             name: "等待买家付款",
+            //             data: jsonObject.orderUnpaidArray
+            //         }]
+            //     });
+            // }
         }
 
         /**

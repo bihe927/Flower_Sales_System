@@ -107,6 +107,7 @@
                 //设置产品创建日期
                 $("#span_product_create_date").text('${requestScope.product.product_create_date}');
                 //判断文件是否允许上传
+                checkFileUpload($("#product_banner_list"),1);
                 checkFileUpload($("#product_single_list"),5);
                 checkFileUpload($("#product_details_list"),8);
                 //原属性值Map
@@ -221,6 +222,7 @@
             $(".details_picList").on("click","li:not(.details_picList_fileUpload)",function () {
                 var img = $(this);
                 var productImage_id = img.children("img").attr("name");
+                console.log("productImage_id",productImage_id)
                 var fileUploadInput = $(this).parents("ul").children(".details_picList_fileUpload");
                 if (productImage_id === "new") {
                     $("#btn-ok").unbind("click").click(function () {
@@ -335,16 +337,24 @@
             }
             var ul = $(fileDom).parents(".details_picList");
             var type;
+
+            if (ul.attr("id") === "product_banner_list"){
+                type = "banner"
+            }
             if (ul.attr("id") === "product_single_list") {
                 type = "single";
-            } else {
+            }
+            if (ul.attr("id") === "product_details_list"){
                 type = "details";
             }
+            console.log("type",type)
             //清空值
             $(fileDom).val('');
             var formData = new FormData();
+            var id =  $("#span_product_id").text();
             formData.append("file", file);
             formData.append("imageType", type);
+            formData.append("id",id);
             //上传图片
             $.ajax({
                 url: "/tmall/admin/uploadProductImage",
@@ -357,10 +367,15 @@
                 success: function (data) {
                     $(fileDom).attr("disabled", false).prev("span").text("上传图片");
                     if (data.success) {
+                        if (type === "banner"){
+                            $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${pageContext.request.contextPath}/res/images/fore/WebsiteImage/banner/" + data.id + ".jpg ' width='128px' height='128px' name='new'/></li>");
+                            checkFileUpload(ul, 1);
+                        }
                         if (type === "single") {
                             $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${pageContext.request.contextPath}/res/images/item/productSinglePicture/" + data.fileName + "' width='128px' height='128px' name='new'/></li>");
                             checkFileUpload(ul, 5);
-                        } else {
+                        }
+                        if (type === "details"){
                             $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${pageContext.request.contextPath}/res/images/item/productDetailsPicture/" + data.fileName + "' width='128px' height='128px' name='new'/></li>");
                             checkFileUpload(ul, 8);
                         }
@@ -481,6 +496,27 @@
         <input class="frm_input details_unit"  id="input_product_sale_price" type="text" maxlength="10" value="${requestScope.product.product_sale_price}"/>
         <span class="details_unit text_info">元</span>
     </div>
+</div>
+<div class="details_div">
+    <span class="details_title text_info">促销轮播图</span>
+    <ul class="details_picList" id="product_banner_list">
+        <c:if test="${product!=null}">
+            <li><img
+                    src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/banner/${product.product_id}.jpg"
+                    id="pic_banner_${product.product_id}" width="128px" height="128px"
+                    name="new"/>
+            </li>
+        </c:if>
+
+        <li class="details_picList_fileUpload">
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1528"  width="40" height="40">
+                <path d="M0 512C0 229.230208 229.805588 0 512 0 794.769792 0 1024 229.805588 1024 512 1024 794.769792 794.194412 1024 512 1024 229.230208 1024 0 794.194412 0 512Z" p-id="1529" fill="#FF7874"></path>
+                <path d="M753.301333 490.666667l-219.946667 0L533.354667 270.741333c0-11.776-9.557333-21.333333-21.354667-21.333333-11.776 0-21.333333 9.536-21.333333 21.333333L490.666667 490.666667 270.72 490.666667c-11.776 0-21.333333 9.557333-21.333333 21.333333 0 11.797333 9.557333 21.354667 21.333333 21.354667L490.666667 533.354667l0 219.904c0 11.861333 9.536 21.376 21.333333 21.376 11.797333 0 21.354667-9.578667 21.354667-21.333333l0-219.946667 219.946667 0c11.754667 0 21.333333-9.557333 21.333333-21.354667C774.634667 500.224 765.077333 490.666667 753.301333 490.666667z" p-id="1530" fill="#FFFFFF"></path>
+            </svg>
+            <span>点击上传</span>
+            <input type="file" onchange="uploadImage(this)" accept="image/*">
+        </li>
+    </ul>
 </div>
 <div class="details_div">
     <span class="details_title text_info">概述图片</span>

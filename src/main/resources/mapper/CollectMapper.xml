@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xq.tmall.dao.CollectMapper">
+
+    <resultMap type="com.xq.tmall.entity.Collect" id="CollectMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CollectMap">
+        select
+          user_id, product_id
+        from tmalldemodb.collect
+        where user_id = #{userId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CollectMap">
+        select
+          user_id, product_id
+        from tmalldemodb.collect
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CollectMap">
+        select
+        user_id, product_id
+        from tmalldemodb.collect
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="productId != null">
+                and product_id = #{productId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into tmalldemodb.collect(user_id, product_id)
+        values (#{userId}, #{productId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into tmalldemodb.collect(product_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into tmalldemodb.collect(product_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.productId})
+        </foreach>
+        on duplicate key update
+        product_id = values(product_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tmalldemodb.collect
+        <set>
+            <if test="productId != null">
+                product_id = #{productId},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tmalldemodb.collect where product_id = #{productId}
+    </delete>
+
+</mapper>
+

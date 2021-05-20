@@ -197,4 +197,8 @@
             </if>
         </where>
     </select>
+
+    <delete id="alter" parameterType="int">
+        alter table product auto_increment = #{start}
+    </delete>
 </mapper>

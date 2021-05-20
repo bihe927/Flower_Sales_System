@@ -15,6 +15,7 @@ public class Product {
     private Category product_category;
     private Byte product_isEnabled;
     private List<PropertyValue> propertyValueList;
+    private List<ProductImage> bannerProductImageList;
     private List<ProductImage> singleProductImageList;
     private List<ProductImage> detailProductImageList;
     private List<Review> reviewList;
@@ -74,6 +75,14 @@ public class Product {
         this.productOrderItemList = productOrderItemList;
         this.product_sale_count = product_sale_count;
         this.product_review_count = product_review_count;
+    }
+
+    public List<ProductImage> getBannerProductImageList() {
+        return bannerProductImageList;
+    }
+
+    public void setBannerProductImageList(List<ProductImage> bannerProductImageList) {
+        this.bannerProductImageList = bannerProductImageList;
     }
 
     public Integer getProduct_id() {

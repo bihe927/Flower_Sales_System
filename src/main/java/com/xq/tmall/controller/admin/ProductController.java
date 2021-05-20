@@ -69,6 +69,7 @@ public class ProductController extends BaseController{
     //转到后台管理-产品详情页-ajax
     @RequestMapping(value="admin/product/{pid}",method = RequestMethod.GET)
     public String goToDetailsPage(HttpSession session, Map<String, Object> map, @PathVariable Integer pid/* 产品ID */) {
+
         logger.info("检查管理员权限");
         Object adminId = checkAdmin(session);
         if(adminId == null){
@@ -475,15 +476,28 @@ public class ProductController extends BaseController{
     //上传产品图片-ajax
     @ResponseBody
     @RequestMapping(value = "admin/uploadProductImage", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public String uploadProductImage(@RequestParam MultipartFile file, @RequestParam String imageType, HttpSession session) {
+    public String uploadProductImage(@RequestParam MultipartFile file, @RequestParam String imageType, @RequestParam String id, HttpSession session) {
         String originalFileName = file.getOriginalFilename();
         logger.info("获取图片原始文件名：{}", originalFileName);
         String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
-        String filePath;
+        String filePath = null;
         String fileName = UUID.randomUUID() + extension;
+        if ("banner".equals(imageType)){
+            if ("系统指定".equals(id)){
+                //查找最后一个商品id
+                List<Product> lastProduct = productService.getLast();
+                id = String.valueOf(lastProduct.get(0).getProduct_id()+1);
+                //重新id自增
+                productService.alter(lastProduct.get(0).getProduct_id()+1);
+                filePath = session.getServletContext().getRealPath("/") + "res/images/fore/WebsiteImage/banner/" + id + extension;
+            }else {
+                filePath = session.getServletContext().getRealPath("/") + "res/images/fore/WebsiteImage/banner/" + id + extension;
+            }
+        }
         if ("single".equals(imageType)) {
             filePath = session.getServletContext().getRealPath("/") + "res/images/item/productSinglePicture/" + fileName;
-        } else {
+        }
+        if ("details".equals(imageType)){
             filePath = session.getServletContext().getRealPath("/") + "res/images/item/productDetailsPicture/" + fileName;
         }
 
@@ -495,6 +509,7 @@ public class ProductController extends BaseController{
             logger.info("文件上传完成");
             object.put("success", true);
             object.put("fileName", fileName);
+            object.put("id", id);
         } catch (IOException e) {
             logger.warn("文件上传失败！");
             e.printStackTrace();
